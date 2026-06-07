@@ -1,10 +1,13 @@
-name: Hello Workflow
+name: Full Lab Workflow
 
 on:
   push:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
-  hello:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,3 +16,30 @@ jobs:
           echo "Welcome Students"
           echo "Learning GitHub Actions"
           echo "Today's Lab Session"
+
+      - name: Show Current Directory
+        run: pwd
+
+      - name: List Files (before checkout)
+        run: ls
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: List Files (after checkout)
+        run: ls
+
+      - name: Read index file
+        run: cat index.txt
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Step
+        run: echo "Building project..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Step
+        run: echo "Deploying project..."
